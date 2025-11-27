@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TechParts - Cửa hàng linh kiện điện thoại</title>
+
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- ICONS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- JQUERY -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- JQUERY UI -->
+    <link href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" rel="stylesheet">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+   <style>
+    body {
+        background: #eef1f6;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* NAVBAR */
+    .navbar {
+        background: #ffffffcc;
+        backdrop-filter: blur(12px);
+        border-bottom: 2px solid #e2e8f3;
+        padding: 12px 0;
+    }
+
+    .navbar-brand {
+        font-size: 24px;
+        color: #0048ff !important;
+    }
+
+    .nav-link {
+        font-weight: 500;
+        margin-left: 10px;
+        color: #444 !important;
+        transition: 0.25s;
+    }
+
+    .nav-link:hover {
+        color: #0066ff !important;
+    }
+
+    .nav-link.active {
+        color: #0048ff !important;
+        font-weight: 600;
+        border-bottom: 2px solid #0048ff;
+    }
+
+    .cursor-pointer {
+        cursor: pointer;
+    }
+
+    /* HERO BANNER */
+    .hero {
+        margin: 20px;
+        background: linear-gradient(to right, #005eff, #6aa7ff);
+        padding: 70px 25px;
+        border-radius: 18px;
+        color: white;
+        text-shadow: 1px 1px 3px #00000030;
+        box-shadow: 0 8px 20px #0048ff40;
+    }
+
+    .hero h1 {
+        font-size: 48px;
+        font-weight: 700;
+    }
+
+    .hero p {
+        font-size: 18px;
+        opacity: 0.9;
+    }
+
+    .hero button {
+        border-radius: 30px;
+        padding: 10px 25px;
+        font-size: 16px;
+        box-shadow: 0 4px 10px #0003;
+    }
+
+    /* PRODUCT CARD */
+    .product-card {
+        border-radius: 16px;
+        overflow: hidden;
+        border: none;
+        transition: 0.3s;
+        background: #fff;
+        box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+    }
+
+    .product-card img {
+        height: 180px;
+        object-fit: contain;
+        background: #f8f9fc;
+        padding: 10px;
+    }
+
+    .product-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    }
+
+    .product-card .card-body {
+        text-align: center;
+    }
+
+    .product-card .card-body h6 {
+        font-weight: 600;
+        height: 42px;
+    }
+
+    .product-card .card-body p {
+        font-size: 18px;
+    }
+
+    /* BLOG CARD */
+    .blog-card {
+        border-radius: 14px;
+        box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        transition: 0.25s;
+    }
+
+    .blog-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        background: #f8faff;
+    }
+
+    .blog-card img {
+        height: 170px;
+        object-fit: cover;
+    }
+
+    /* SECTION TITLES */
+    h3, h2 {
+        font-weight: 700;
+        color: #1e2a3b;
+    }
+
+    /* CART ITEMS */
+    #cart-items .card {
+        border-radius: 14px;
+        background: #ffffff;
+        box-shadow: 0px 4px 12px rgba(0,0,0,0.07);
+    }
+
+    /* ORDER HISTORY */
+    #orders-list .card {
+        border-radius: 12px;
+        background: #ffffff;
+        box-shadow: 0px 3px 10px rgba(0,0,0,0.06);
+    }
+
+    /* MODAL */
+    .modal-content {
+        border-radius: 18px;
+        padding: 10px !important;
+    }
+
+    .modal-img {
+        border-radius: 14px;
+        background: #f7f7fb;
+    }
+
+    button.btn-primary {
+        border-radius: 25px;
+        font-weight: 600;
+        padding: 8px 20px;
+    }
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+<nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold">
+            ⚙️ TechParts
+        </a>
+
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div id="nav" class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a data-page="home" class="nav-link active cursor-pointer">Trang chủ</a>
+                </li>
+                <li class="nav-item">
+                    <a data-page="products" class="nav-link cursor-pointer">Sản phẩm</a>
+                </li>
+                <li class="nav-item">
+                    <a data-page="blog" class="nav-link cursor-pointer">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a data-page="cart" class="nav-link cursor-pointer">
+                        Giỏ hàng <span class="badge bg-danger" id="cart-count">0</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a data-page="orders" class="nav-link cursor-pointer">Đơn hàng</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- HOME PAGE -->
+<section id="home-page">
+    <div class="hero">
+        <h1>TechParts</h1>
+        <p>Chuyên linh kiện điện thoại chính hãng – Giá tốt – Uy tín</p>
+        <button class="btn btn-light fw-bold" data-page="products">Xem sản phẩm</button>
+    </div>
+
+    <div class="container py-4">
+        <h3 class="mb-3">Sản phẩm nổi bật</h3>
+        <div class="row" id="featured-products"></div>
+    </div>
+
+    <div class="container py-4">
+        <h3 class="mb-3">Blog mới nhất</h3>
+        <div class="row" id="blog-preview"></div>
+    </div>
+</section>
+
+<!-- PRODUCTS PAGE -->
+<section id="products-page" style="display:none">
+    <div class="container py-4">
+        <h2 class="mb-3">Tất cả sản phẩm</h2>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <input id="search-box" class="form-control" placeholder="Tìm sản phẩm...">
+            </div>
+
+            <div class="col-md-4">
+                <select id="sort-select" class="form-select">
+                    <option value="default">Sắp xếp mặc định</option>
+                    <option value="low">Giá thấp → cao</option>
+                    <option value="high">Giá cao → thấp</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row" id="products-grid"></div>
+    </div>
+</section>
+
+<!-- BLOG PAGE -->
+<section id="blog-page" style="display:none">
+    <div class="container py-4">
+        <h2 class="mb-3">Blog</h2>
+        <div class="row" id="blog-list"></div>
+    </div>
+</section>
+
+<!-- CART PAGE -->
+<section id="cart-page" style="display:none">
+    <div class="container py-4">
+        <h2 class="mb-3">Giỏ hàng</h2>
+        <div id="cart-empty" class="text-center py-5">Giỏ hàng trống</div>
+        <div id="cart-items"></div>
+
+        <button id="checkout-btn" class="btn btn-primary mt-3" style="display:none">
+            Thanh toán
+        </button>
+    </div>
+</section>
+
+<!-- ORDERS PAGE -->
+<section id="orders-page" style="display:none">
+    <div class="container py-4">
+        <h2 class="mb-3">Đơn hàng đã đặt</h2>
+        <div id="orders-list"></div>
+    </div>
+</section>
+
+<!-- PRODUCT MODAL -->
+<div class="modal fade" id="productModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content p-3">
+            <h4 id="pm-title"></h4>
+            <img id="pm-img" class="modal-img mb-3">
+            <p id="pm-desc"></p>
+            <h4 class="text-primary" id="pm-price"></h4>
+            <button id="pm-add" class="btn btn-primary mt-3">Thêm vào giỏ</button>
+        </div>
+    </div>
+</div>
+
+<!-- BLOG MODAL -->
+<div class="modal fade" id="blogModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content p-3">
+            <h3 id="bm-title"></h3>
+            <img id="bm-img" class="modal-img mb-3">
+            <p id="bm-content"></p>
+        </div>
+    </div>
+</div>
+<script>
+
+////////////////////////////////////////////////////////////////////////////////
+// ★★★ 10 SẢN PHẨM CÓ ẢNH THẬT ★★★
+////////////////////////////////////////////////////////////////////////////////
+
+const PRODUCTS = [
+    {id:1, name:"Pin iPhone 13 Pro Max", price:850000, desc:"Pin dung lượng cao, an toàn, bảo vệ bo mạch.", img:"https://huydungmobile.com/wp-content/uploads/2024/08/pin-boc-may-iphone-13-pro-max.jpg"},
+    {id:2, name:"Màn hình iPhone 14 OLED", price:2500000, desc:"Màn OLED sắc nét, full viền.", img:"https://vi.jklcddisplay.com/public/upload/20240116/2401161T22V17.webp"},
+    {id:3, name:"Cáp Lightning Apple 1m", price:250000, desc:"Cáp sạc nhanh chuẩn Apple.", img:"https://cdn.tgdd.vn/Products/Images/58/217437/cap-lightning-1m-apple-mxly2-thumb-600x600.jpeg"},
+    {id:4, name:"Sạc nhanh Type-C 30W", price:1200000, desc:"Công suất 30W hỗ trợ sạc nhanh iPhone và Android.", img:"https://cdn.tgdd.vn/Products/Images/9499/264973/adapter-sac-type-c-pd-gan-30w-xmobile-mfm30-trang-thumb-2-600x600.jpeg"},
+    {id:5, name:"Pin Samsung S23 Ultra", price:780000, desc:"Pin theo máy dung lượng lớn 5000mAh.", img:"https://cdni.dienthoaivui.com.vn/x,webp,q100/https://dashboard.dienthoaivui.com.vn/uploads/wp-content/uploads/images/thay-pin-samsung-galaxy-s23-ultra-2.jpg"},
+    {id:6, name:"Màn hình Samsung A54", price:1900000, desc:"Màn AMOLED chính hãng, hiển thị sắc nét.", img:"https://dt24h.com/wp-content/uploads/2023/07/Samsung-Galaxy-A54-SM-A546B-5.jpg"},
+    {id:7, name:"Cáp Type-C Samsung", price:180000, desc:"Cáp hỗ trợ sạc nhanh chuẩn PD.", img:"https://bizweb.dktcdn.net/100/184/165/products/ss-trang-usb-8b69c219-dffb-4298-a3d9-0857290f9aee.jpg?v=1634118986260"},
+    {id:8, name:"Sạc nhanh Samsung 45W", price:890000, desc:"Công nghệ Super Fast Charge 2.0.", img:"https://cdn.tgdd.vn/Products/Images/9499/325099/bo-adapter-sac-kem-cap-type-c-type-c-pd-45w-samsung-ep-t4511xb-600x600.jpg"},
+    {id:9, name:"Pin Redmi Note 12", price:650000, desc:"Dung lượng chuẩn 5000mAh cho Redmi Note 12.", img:"https://fonesmart.com.vn/images/products/2022/09/12/large/pin-xiaomi-redmi-note-10s_1662968597-copy.jpg"},
+    {id:10, name:"Sạc nhanh Xiaomi 67W", price:920000, desc:"TurboCharge 67W cho Xiaomi đời mới.", img:"https://bizweb.dktcdn.net/thumb/1024x1024/100/419/687/products/1-1680253010565.png?v=1680253015140"},
+
+    {id:11, name:"Ốp lưng iPhone 14 Pro Max chống sốc", price:150000, desc:"Ốp TPU viền dày chống va đập hiệu quả.", img:"https://lesang.vn/images/san-pham/op-lung-iphone-14-pro-max-uag-monarch-5-lop-chong-soc1664425071.jpg"},
+    {id:12, name:"Kính cường lực iPhone 13", price:120000, desc:"Kính 9H chống trầy, phủ oleophobic.", img:"https://minhtuanmobile.com/uploads/products/cuong-luc-iphone-12-pro-max-jcpal-premium-preserve-jcp4005-220728094800.jpg"},
+    {id:13, name:"Loa ngoài iPhone 11", price:350000, desc:"Loa ngoài chuẩn zin, âm thanh lớn và rõ.", img:"https://cdn.carecenter.vn/photosCarecenter/1722345810308-loa-ngoai-iphone-11.jpg"},
+    {id:14, name:"Camera sau Samsung S22 Ultra", price:2200000, desc:"Camera 108MP thay thế chất lượng như mới.", img:"https://viendidong.com/wp-content/uploads/2023/10/thay-camera-sau-samsung-galaxy-s22-ultra-thumb-viendidong.jpg"},
+    {id:15, name:"Cáp sạc nhanh Baseus Type-C 100W", price:190000, desc:"Cáp bọc dù siêu bền, hỗ trợ sạc laptop.", img:"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/c/a/cap-sac-nhanh-baseus-cafule-pd-2-0-100w-type-c-to-type-c-20v-5a-2m.1_7_.png"},
+    {id:16, name:"Pin Oppo Reno 6", price:680000, desc:"Pin dung lượng 4300mAh theo máy.", img:"https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-ltlqifmmrkzu71"},
+    {id:17, name:"Màn hình Xiaomi Mi 11", price:2800000, desc:"Màn AMOLED cong cao cấp, hiển thị đẹp.", img:"https://fonesmart.com.vn/images/products/2022/05/10/large/man-hinh-xiaomi-mi-11-fonesmart_1652156921.jpg"},
+    {id:18, name:"Tai nghe Bluetooth Xiaomi Buds 4 Lite", price:590000, desc:"Âm bass tốt, thời lượng pin dài.", img:"https://cdnv2.tgdd.vn/mwg-static/tgdd/Products/Images/54/304652/tai-nghe-bluetooth-tws-xiaomi-redmi-buds-4-lite-060525-014828-579-600x600.jpg"},
+    {id:19, name:"Củ sạc Anker PowerPort III 30W", price:450000, desc:"Công nghệ PowerIQ 3.0 sạc nhanh ổn định.", img:"https://phukiengiare.com/images/detailed/63/adapter-sac-anker-powerport-3-mini-30w-a2615-91.png"},
+    {id:20, name:"Sạc dự phòng 10000mAh Samsung", price:520000, desc:"Hỗ trợ sạc nhanh 25W, nhỏ gọn tiện lợi.", img:"https://bizweb.dktcdn.net/100/257/835/products/pin-sac-du-phong-samsung-10000-mah-type-c-05.jpg?v=1567065458653"}
+];
+
+
+////////////////////////////////////////////////////////////////////////////////
+// ★★★ 10 BÀI VIẾT CÓ ẢNH THẬT ★★★
+////////////////////////////////////////////////////////////////////////////////
+
+const BLOG = [
+    {id:1, title:"Cách bảo vệ pin điện thoại", content:"Giữ pin trong mức 20–80%, hạn chế sạc qua đêm và tránh để máy nóng khi sử dụng...", img:"https://news.vio.vn/wp-content/uploads/2018/11/cach-bao-ve-pin-dien-thoai-6.jpg"},
+    {id:2, title:"USB-C vs Lightning – cái nào tốt hơn?", content:"USB-C nhanh và đa dụng hơn, còn Lightning nhỏ gọn nhưng đang dần bị thay thế...", img:"https://bizweb.dktcdn.net/100/504/042/files/usb-c-vs-lightning-cable.jpg?v=1711958624210"},
+    {id:3, title:"Dấu hiệu cần thay màn hình", content:"Loạn cảm ứng, sọc màn, ám màu hoặc cảm ứng chập chờn là dấu hiệu nên thay màn...", img:"https://blog.carecenter.vn/wp-content/uploads/2024/11/man-hinh-khong-phan-hoi-cam-ung.jpg"},
+    {id:4, title:"5 mẹo tăng tuổi thọ pin", content:"Tránh để máy nóng, dùng sạc chuẩn và duy trì mức pin 20–80% để pin bền hơn...", img:"https://news.vio.vn/wp-content/uploads/2020/05/tang-tuoi-tho-pin-dien-thoai-1.jpg"},
+    {id:5, title:"Có nên dùng sạc nhanh?", content:"Sạc nhanh an toàn nếu sử dụng hàng chính hãng và phù hợp công suất thiết bị...", img:"https://cdn.hstatic.net/files/200000759485/article/co_nen_dung_sac_nhanh_cho_iphone_khong_0635f75e8a8945c8937b86cfcd8dfa03.png"},
+    {id:6, title:"Cách kiểm tra cáp sạc thật – giả", content:"Cáp thật có độ hoàn thiện cao, chân kim chắc chắn và có mã kiểm tra rõ ràng...", img:"https://www.phukiensamsung.com/Uploads/phan-biet-cable-usb-samsung-chinh-hang-17070312013025850.jpg"},
+    {id:7, title:"Điện thoại rơi xuống nước phải làm gì?", content:"Tắt nguồn ngay, không sấy nóng và mang đi vệ sinh máy ở trung tâm sửa chữa...", img:"https://cdn.tgdd.vn//News/717745//do-not-blow-it800x570-730x520.jpg"},
+    {id:8, title:"Tại sao điện thoại bị chai pin?", content:"Nhiệt độ cao, sạc không chuẩn và chu kỳ sạc tăng theo thời gian làm pin bị chai...", img:"https://image.dienthoaivui.com.vn/x,webp,q90/https://dashboard.dienthoaivui.com.vn/uploads/dashboard/editor_upload/chai-pin-2.jpg"},
+    {id:9, title:"5 lý do nên thay pin định kỳ", content:"Pin cũ gây tụt nguồn, giảm hiệu năng và có nguy cơ phồng pin gây nguy hiểm...", img:"https://viendidong.com/wp-content/uploads/2023/10/ly-do-nen-thay-pin-iphone-tai-vien-di-dong-viendidong.jpg"},
+    {id:10, title:"Cách chọn củ sạc an toàn", content:"Chọn công suất phù hợp, thương hiệu uy tín và có chip bảo vệ quá dòng – quá nhiệt...", img:"https://cdn.tgdd.vn/hoi-dap/1020035/chon-cap-sac-phu-hop-cho-dien-thoai--8-800x450.jpg"}
+];
+
+////////////////////////////////////////////////////////////////////////////////
+// ★★★ BIẾN LƯU GIỎ HÀNG & ĐƠN HÀNG ★★★
+////////////////////////////////////////////////////////////////////////////////
+
+let CART = JSON.parse(localStorage.getItem("cart") || "[]");
+let ORDERS = JSON.parse(localStorage.getItem("orders") || "[]");
+
+////////////////////////////////////////////////////////////////////////////////
+// ★★★ ĐỔI TRANG (PAGE ROUTER) ★★★
+////////////////////////////////////////////////////////////////////////////////
+
+function showPage(page){
+    $("section").hide();
+    $(`#${page}-page`).show();
+
+    $(".nav-link").removeClass("active");
+    $(`.nav-link[data-page='${page}']`).addClass("active");
+
+    if(page === "home") { loadFeatured(); loadBlogPreview(); }
+    if(page === "products") loadProducts();
+    if(page === "blog") loadBlogList();
+    if(page === "cart") loadCart();
+    if(page === "orders") loadOrders();
+}
+
+$(".nav-link, button[data-page]").click(function(){
+    showPage($(this).data("page"));
+});
+
+////////////////////////////////////////////////////////////////////////////////
+// ★★★ LOAD SẢN PHẨM NỔI BẬT ★★★
+////////////////////////////////////////////////////////////////////////////////
+
+function loadFeatured(){
+    let html = "";
+    PRODUCTS.slice(0,4).forEach(p=>{
+        html += `
+        <div class="col-md-3 mb-3">
+            <div class="card product-card cursor-pointer" onclick="openProduct(${p.id})">
+                <img src="${p.img}" class="card-img-top">
+                <div class="card-body">
+                    <h6>${p.name}</h6>
+                    <p class="text-primary fw-bold">${p.price.toLocaleString()}₫</p>
+                </div>
+            </div>
+        </div>`;
+    });
+    $("#featured-products").html(html);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// ★★★ LOAD BLOG PREVIEW ★★★
+////////////////////////////////////////////////////////////////////////////////
+
+function loadBlogPreview(){
+    let html = "";
+    BLOG.slice(0,2).forEach(b=>{
+        html += `
+        <div class="col-md-6 mb-3">
+            <div class="card blog-card cursor-pointer" onclick="openBlog(${b.id})">
+                <img src="${b.img}" class="card-img-top">
+                <div class="card-body">
+                    <h5>${b.title}</h5>
+                    <p>${b.content.substring(0,60)}...</p>
+                </div>
+            </div>
+        </div>`;
+    });
+    $("#blog-preview").html(html);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// ★★★ LOAD TẤT CẢ SẢN PHẨM ★★★
+////////////////////////////////////////////////////////////////////////////////
+
+function loadProducts(){
+    let html = "";
+    PRODUCTS.forEach(p=>{
+        html += `
+        <div class="col-md-3 mb-3">
+            <div class="card product-card cursor-pointer" onclick="openProduct(${p.id})">
+                <img src="${p.img}" class="card-img-top">
+                <div class="card-body">
+                    <h6>${p.name}</h6>
+                    <p class="text-primary fw-bold">${p.price.toLocaleString()}₫</p>
+                </div>
+            </div>
+        </div>`;
+    });
+    $("#products-grid").html(html);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// ★★★ TÌM KIẾM AUTOCOMPLETE ★★★
+////////////////////////////////////////////////////////////////////////////////
+
+$("#search-box").autocomplete({
+    source: PRODUCTS.map(p=>p.name),
+    select: function(e, ui){
+        let p = PRODUCTS.find(x=>x.name === ui.item.value);
+        openProduct(p.id);
+    }
+});
+
+////////////////////////////////////////////////////////////////////////////////
+// ★★★ SẮP XẾP SẢN PHẨM ★★★
+////////////////////////////////////////////////////////////////////////////////
+
+$("#sort-select").change(()=>{
+    let val = $("#sort-select").val();
+    let sorted = [...PRODUCTS];
+
+    if(val==="low") sorted.sort((a,b)=>a.price - b.price);
+    if(val==="high") sorted.sort((a,b)=>b.price - a.price);
+
+    let html = "";
+    sorted.forEach(p=>{
+        html += `
+        <div class="col-md-3 mb-3">
+            <div class="card cursor-pointer" onclick="openProduct(${p.id})">
+                <img src="${p.img}" class="card-img-top">
+                <div class="card-body">
+                    <h6>${p.name}</h6>
+                    <p class="text-primary fw-bold">${p.price.toLocaleString()}₫</p>
+                </div>
+            </div>
+        </div>`;
+    });
+
+    $("#products-grid").html(html);
+});
+
+////////////////////////////////////////////////////////////////////////////////
+// ★★★ MỞ SẢN PHẨM (MODAL) ★★★
+////////////////////////////////////////////////////////////////////////////////
+
+function openProduct(id){
+    let p = PRODUCTS.find(x=>x.id === id);
+
+    $("#pm-title").text(p.name);
+    $("#pm-img").attr("src", p.img);
+    $("#pm-desc").text(p.desc);
+    $("#pm-price").text(p.price.toLocaleString() + "₫");
+
+    $("#pm-add").off().click(()=> addToCart(p));
+
+    new bootstrap.Modal("#productModal").show();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// ★★★ LOAD BLOG LIST ★★★
+////////////////////////////////////////////////////////////////////////////////
+
+function loadBlogList(){
+    let html="";
+    BLOG.forEach(b=>{
+        html+=`
+        <div class="col-md-4 mb-3">
+            <div class="card blog-card cursor-pointer" onclick="openBlog(${b.id})">
+                <img src="${b.img}" class="card-img-top">
+                <div class="card-body">
+                    <h5>${b.title}</h5>
+                    <p>${b.content.substring(0,60)}...</p>
+                </div>
+            </div>
+        </div>`;
+    });
+    $("#blog-list").html(html);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// ★★★ MỞ BLOG (MODAL) ★★★
+////////////////////////////////////////////////////////////////////////////////
+
+function openBlog(id){
+    let b = BLOG.find(x=>x.id === id);
+    $("#bm-title").text(b.title);
+    $("#bm-content").text(b.content);
+    $("#bm-img").attr("src", b.img);
+    new bootstrap.Modal("#blogModal").show();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// ★★★ GIỎ HÀNG – THÊM ★★★
+////////////////////////////////////////////////////////////////////////////////
+
+function addToCart(p){
+    let item = CART.find(x=>x.id === p.id);
+    if(item) item.qty++;
+    else CART.push({id:p.id, name:p.name, price:p.price, img:p.img, qty:1});
+
+    saveCart();
+    alert("Đã thêm vào giỏ!");
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// ★★★ GIỎ HÀNG – LOAD ★★★
+////////////////////////////////////////////////////////////////////////////////
+
+function loadCart(){
+    let html="";
+
+    if(CART.length === 0){
+        $("#cart-empty").show();
+        $("#checkout-btn").hide();
+        $("#cart-items").html("");
+        updateCartCount();
+        return;
+    }
+
+    $("#cart-empty").hide();
+    $("#checkout-btn").show();
+
+    CART.forEach((item,i)=>{
+        html += `
+        <div class="card mb-2 p-2">
+            <div class="d-flex">
+                <img src="${item.img}" width="90" height="70" class="rounded me-3">
+                <div>
+                    <h6>${item.name}</h6>
+                    <p class="text-primary fw-bold">${item.price.toLocaleString()}₫</p>
+
+                    <button class="btn btn-outline-secondary btn-sm" onclick="changeQty(${i}, -1)">-</button>
+                    <span class="mx-2">${item.qty}</span>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="changeQty(${i}, 1)">+</button>
+
+                    <button class="btn btn-danger btn-sm ms-3" onclick="removeItem(${i})">Xóa</button>
+                </div>
+            </div>
+        </div>`;
+    });
+
+    $("#cart-items").html(html);
+    updateCartCount();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// ★★★ GIỎ HÀNG – TĂNG GIẢM ★★★
+////////////////////////////////////////////////////////////////////////////////
+
+function changeQty(index, delta){
+    CART[index].qty += delta;
+    if(CART[index].qty <= 0) CART.splice(index,1);
+    saveCart();
+    loadCart();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// ★★★ GIỎ HÀNG – XÓA ★★★
+////////////////////////////////////////////////////////////////////////////////
+
+function removeItem(i){
+    CART.splice(i,1);
+    saveCart();
+    loadCart();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// ★★★ CHỈ SỐ GIỎ HÀNG ★★★
+////////////////////////////////////////////////////////////////////////////////
+
+function updateCartCount(){
+    let total = CART.reduce((s,i)=> s + i.qty , 0);
+    if(total > 0){
+        $("#cart-count").show().text(total);
+    } else {
+        $("#cart-count").hide();
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// ★★★ LƯU GIỎ ★★★
+////////////////////////////////////////////////////////////////////////////////
+
+function saveCart(){
+    localStorage.setItem("cart", JSON.stringify(CART));
+    updateCartCount();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// ★★★ ĐẶT HÀNG ★★★
+////////////////////////////////////////////////////////////////////////////////
+
+$("#checkout-btn").click(()=>{
+
+    let order = {
+        id: "ORD" + Date.now(),
+        date: new Date().toLocaleString(),
+        items: CART,
+        total: CART.reduce((s,i)=> s + i.price * i.qty, 0)
+    };
+
+    ORDERS.push(order);
+    localStorage.setItem("orders", JSON.stringify(ORDERS));
+
+    CART = [];
+    saveCart();
+
+    alert("Đặt hàng thành công!");
+    showPage("orders");
+});
+
+////////////////////////////////////////////////////////////////////////////////
+// ★★★ LOAD ĐƠN HÀNG ★★★
+////////////////////////////////////////////////////////////////////////////////
+
+function loadOrders(){
+    let html="";
+    ORDERS.forEach(o=>{
+        html += `
+        <div class="card p-3 mb-2">
+            <h6>Mã đơn: ${o.id}</h6>
+            <p>Ngày: ${o.date}</p>
+            <p class="fw-bold text-primary">Tổng: ${o.total.toLocaleString()}₫</p>
+        </div>`;
+    });
+    $("#orders-list").html(html);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// ★★★ KHỞI CHẠY ★★★
+////////////////////////////////////////////////////////////////////////////////
+
+showPage("home");
+updateCartCount();
+
+</script>
+
+<!-- BOOTSTRAP JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<!-- FOOTER -->
+<footer class="mt-5 text-white" style="background:#002b80;">
+    <div class="container py-4">
+        <div class="row">
+
+            <div class="col-md-4 mb-3">
+                <h5 class="fw-bold">TechParts</h5>
+                <p>Chuyên cung cấp linh kiện điện thoại chính hãng – giá tốt – bảo hành đầy đủ.</p>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <h5 class="fw-bold">Liên hệ</h5>
+                <p>📍 Ấp Lọ Đức 2, Trảng Bom, Đồng Nai</p>
+                <p>📞 0337 461 577</p>
+                <p>✉ hoangsyphi1501@gmail.com</p>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <h5 class="fw-bold">Theo dõi chúng tôi</h5>
+                <i class="bi bi-facebook fs-3 me-2"></i>
+                <i class="bi bi-instagram fs-3 me-2"></i>
+                <i class="bi bi-youtube fs-3"></i>
+            </div>
+
+        </div>
+        <hr style="border-color:#ffffff55">
+        <p class="text-center">© 2025 TechParts – All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>
